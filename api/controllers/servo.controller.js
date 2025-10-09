@@ -1,10 +1,13 @@
 const { Code } = require("../const/response.code");
 const { Messages } = require("../const/response.message");
 const { changeStateServo } = require("../devices/servo.driver");
-const { getInfo, update } = require("../services/servo.services");
+const {
+  getInfo: svcGetInfo,
+  update: svcUpdate,
+} = require("../services/servo.services");
 
 async function getInfo(req, res) {
-  const result = await getInfo();
+  const result = await svcGetInfo();
   if (result.length) {
     return res.status(Code.Success).json(result);
   }
@@ -20,7 +23,7 @@ async function turn(req, res) {
   }
 
   changeStateServo(data);
-  const result = await update(data.address, data.state);
+  const result = await svcUpdate(data.address, data.state);
 
   if (result.affectedRows) {
     return res.status(Code.Success).json({ message: Messages.ServoModified });

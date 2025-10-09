@@ -1,10 +1,10 @@
 const {
-  getAll,
-  getById,
-  removeUser,
-  createUser,
-  updateUser,
-  userExist,
+  getAll: svcGetAll,
+  getById: svcGetById,
+  removeUser: svcRemoveUser,
+  createUser: svcCreateUser,
+  updateUser: svcUpdateUser,
+  userExist: svcUserExist,
 } = require("../services/users.services");
 const { Code } = require("../const/response.code");
 const { Messages } = require("../const/response.message");
@@ -16,7 +16,7 @@ async function create(req, res) {
   req.body.password = await hashPassword(req.body.password);
   delete req.body.password_confirm;
 
-  const result = await createUser(Object.values(req.body));
+  const result = await svcCreateUser(Object.values(req.body));
   if (result.affectedRows) {
     return res.status(Code.Success).json({ message: Messages.UserCreated });
   }
@@ -25,7 +25,7 @@ async function create(req, res) {
 
 async function login(req, res) {
   const { email, password } = req.body;
-  const user = await userExist(email);
+  const user = await svcUserExist(email);
 
   if (user.length) {
     const comparison = compare(password, user.at(0).password);
@@ -54,7 +54,7 @@ async function modify(req, res) {
     delete req.body.password;
   }
 
-  const result = await updateUser(req.body, req.params.id);
+  const result = await svcUpdateUser(req.body, req.params.id);
   if (result.changedRows) {
     return res.status(Code.Success).json({ message: Messages.UserUpdated });
   }
@@ -62,7 +62,7 @@ async function modify(req, res) {
 }
 
 async function getAll(req, res) {
-  const result = await getAll();
+  const result = await svcGetAll();
   if (result.length) {
     return res.status(Code.Success).json(result);
   }
@@ -71,7 +71,7 @@ async function getAll(req, res) {
 
 async function getById(req, res) {
   const { id } = req.params;
-  const result = await getById(id);
+  const result = await svcGetById(id);
   if (result.length) {
     return res.status(Code.Success).json(result);
   }
@@ -80,7 +80,7 @@ async function getById(req, res) {
 
 async function remove(req, res) {
   const { id } = req.params;
-  const result = await removeUser(id);
+  const result = await svcRemoveUser(id);
   if (result.affectedRows) {
     return res.status(Code.Success).json({ message: Messages.UserDeleted });
   }

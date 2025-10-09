@@ -12,7 +12,7 @@ The backend is built with Node.js and Express, and is designed to run on a Raspb
 ## Requirements
 
 - Raspberry Pi (or compatible SBC) running Raspberry Pi OS or another Linux distribution.
-- NNode.js 16+ (check for compatibility with native modules used by hardware drivers).
+- Node.js 16+ (check for compatibility with native modules used by hardware drivers).
 - MySQL server (local or network). The code expects a MySQL-compatible database.
 - I²C interface enabled on Raspberry Pi for PWM/servo communication.
 
@@ -95,10 +95,6 @@ During development you can use `npm run dev` (nodemon).
 
 Note: Some endpoints interact with physical devices — calls to device modules will have side effects on GPIO/I2C.
 
-## Inferred Database Schema
-
-See `schema.sql` for the CREATE TABLE statements inferred from the code. Create the schema before starting the app.
-
 ## Wiring & Photos
 
 ![Wiring1](docs/images/1.jpg)
@@ -109,3 +105,7 @@ See `schema.sql` for the CREATE TABLE statements inferred from the code. Create 
 
 - The project uses JWT-based authentication for users (see `/api/controllers/users.controller.js`). Make sure `TOKEN_KEY` in `.env` is set.
 - If anything in the actual hardware wiring or configuration differs from the assumptions in the code, prefer the real wiring/PCB and update the device modules accordingly.
+
+## Inferred Database Schema
+
+See `schema.sql` for the CREATE TABLE statements inferred from the code. Create the schema before starting the app.

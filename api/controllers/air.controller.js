@@ -1,13 +1,16 @@
 const {
-  getTemperatureStats,
-  getHumidityStats,
+  getTemperatureStats: svcGetTemperatureStats,
+  getHumidityStats: svcGetHumidityStats,
 } = require("../services/air.services");
 const { Code } = require("../const/response.code");
 const { Messages } = require("../const/response.message");
-const { getHumidity, getTemperature } = require("../devices/air.sensor");
+const {
+  getHumidity: deviceGetHumidity,
+  getTemperature: deviceGetTemperature,
+} = require("../devices/air.sensor");
 
 async function getTemperature(req, res) {
-  const temp = await getTemperature();
+  const temp = await deviceGetTemperature();
   if (temp) {
     return res.status(Code.Success).json(temp);
   }
@@ -15,7 +18,7 @@ async function getTemperature(req, res) {
 }
 
 async function getHumidity(req, res) {
-  const humidity = await getHumidity();
+  const humidity = await deviceGetHumidity();
   if (humidity) {
     return res.status(Code.Success).json(humidity);
   }
@@ -24,7 +27,7 @@ async function getHumidity(req, res) {
 
 async function getTemperatureStats(req, res) {
   const { start, end } = req.query;
-  const result = await getTemperatureStats(start, end);
+  const result = await svcGetTemperatureStats(start, end);
   if (result.length) {
     return res.status(Code.Success).json(result);
   }
@@ -33,7 +36,7 @@ async function getTemperatureStats(req, res) {
 
 async function getHumidityStats(req, res) {
   const { start, end } = req.query;
-  const result = await getHumidityStats(start, end);
+  const result = await svcGetHumidityStats(start, end);
   if (result.length) {
     return res.status(Code.Success).json(result);
   }

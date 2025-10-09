@@ -1,10 +1,17 @@
 const { Code } = require("../const/response.code");
 const { Messages } = require("../const/response.message");
-const { turnOffAlarm, turnOnPir } = require("../devices/alarm");
-const { getStatus, turnOff, turnOnPir } = require("../services/alarm.services");
+const {
+  turnOffAlarm,
+  turnOnPir: deviceTurnOnPir,
+} = require("../devices/alarm");
+const {
+  getStatus: svcGetStatus,
+  turnOff: svcTurnOff,
+  turnOnPir: svcTurnOnPir,
+} = require("../services/alarm.services");
 
 async function getStatus(req, res) {
-  const result = await getStatus();
+  const result = await svcGetStatus();
   if (result.length) {
     return res.status(Code.Success).json(result);
   }
@@ -15,11 +22,11 @@ async function turn(req, res) {
   let result;
 
   if (req.body.enabled) {
-    await turnOnPir();
-    result = await turnOnPir();
+    await deviceTurnOnPir();
+    result = await svcTurnOnPir();
   } else {
     turnOffAlarm();
-    result = await turnOff();
+    result = await svcTurnOff();
   }
 
   if (result.affectedRows) {

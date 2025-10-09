@@ -1,10 +1,13 @@
 const { Code } = require("../const/response.code");
 const { Messages } = require("../const/response.message");
 const { changeStateLighting } = require("../devices/lighting");
-const { getInfo, update } = require("../services/lighting.services");
+const {
+  getInfo: svcGetInfo,
+  update: svcUpdate,
+} = require("../services/lighting.services");
 
 async function getInfo(req, res) {
-  const result = await getInfo();
+  const result = await svcGetInfo();
   if (result.length) {
     return res.status(Code.Success).json(result);
   }
@@ -14,7 +17,7 @@ async function getInfo(req, res) {
 async function turn(req, res) {
   const data = req.body;
   changeStateLighting(data);
-  const result = await update(data.name, data.state);
+  const result = await svcUpdate(data.name, data.state);
   if (result.affectedRows) {
     return res
       .status(Code.Success)
@@ -25,7 +28,7 @@ async function turn(req, res) {
 
 async function turnAllOutside(req, res) {
   const state = Number(req.body.enabled);
-  const result = await getInfo();
+  const result = await svcGetInfo();
 
   for (const el of result.filter((el) => el.location === "out")) {
     changeStateLighting({ name: el.name, state });
@@ -39,7 +42,7 @@ async function turnAllOutside(req, res) {
 
 async function turnAllInside(req, res) {
   const state = Number(req.body.enabled);
-  const result = await getInfo();
+  const result = await svcGetInfo();
 
   for (const el of result.filter((el) => el.location === "in")) {
     changeStateLighting({ name: el.name, state });
