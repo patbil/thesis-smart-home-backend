@@ -105,7 +105,6 @@ Note: Some endpoints interact with physical devices — calls to device modules 
 
 ## Development notes & assumptions
 
-- The project uses JWT-based authentication for users (see `/api/controllers/users.controller.js`). Make sure `TOKEN_KEY` in `.env` is set.
 - If anything in the actual hardware wiring or configuration differs from the assumptions in the code, prefer the real wiring/PCB and update the device modules accordingly.
 
 ## Inferred Database Schema
