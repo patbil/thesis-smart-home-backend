@@ -18,17 +18,19 @@ The backend is built with Node.js and Express, and is designed to run on a Raspb
 
 ## Environment variables
 
-Create a `.env` file in the project root with at least these values:
+The application loads environment variables from `config/.env` (see `index.js`). Use that file to store secrets and runtime configuration.
+Create `config/.env` with at least these values (names match variables used in the code):
 
 - TOKEN_KEY=your_jwt_secret
 - DB_HOST=127.0.0.1
 - DB_PORT=3306
 - DB_USER=root
-- DB_PASSWORD=your_password
-- DB_DATABASE=smart_home
-- PORT=3000
+- DB_PASS=your_password
+- DB_NAME=smart_home
+- DB_CONNECTION_LIMIT=10
+- SERVER_PORT=3000
 
-Adjust values for your environment. The code uses `mysql2`/`mysql2-promise` to connect to MySQL.
+The code uses `mysql2`/`mysql2-promise` to connect to MySQL.
 
 ## Installation
 
