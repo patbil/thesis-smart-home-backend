@@ -3,6 +3,9 @@
 This repository contains the backend implementation for an engineering thesis project focused on smart-home automation.
 The backend is built with Node.js and Express, and is designed to run on a Raspberry Pi (or compatible single-board computer) connected to sensors, actuators, and a local MySQL database.
 
+## Year of Completion
+2022
+
 ## Highlights
 
 - REST API for managing and monitoring sensors and actuators — including temperature, humidity, PIR alarm, buzzer, individual lights, lighting groups, and servo-driven devices (e.g. blinds and gates).
